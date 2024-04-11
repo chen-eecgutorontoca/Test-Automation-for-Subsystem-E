@@ -287,7 +287,7 @@ for current in supply_currents:
     
     supply.write('OUTP OFF, (@2)')
 
-    time.sleep(1)
+    time.sleep(0.01)
 
     ID.append(current)
     V.append(Vrms)
