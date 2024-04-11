@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 """Subsystem E unit testing script."""
+#Use IDLE to run the testing automation
+#Avoid Sublime Text
 
 import pyvisa
 import time
