@@ -91,8 +91,8 @@ Iidle = float(supply.query('MEAS:CURR? CH2'))
 Iactive = float(supply.query('MEAS:CURR? CH2'))
 Pactive = V*Iactive
 Vrms = float(scope.query(':MEAS:VRMS? CHAN1'))
-Pout = (Vrms*Vrms)/39
-print('RF RMS voltage output:', Vrms, 'Vrms')
+Pout = (Vrms*Vrms)/50
+print('Voltage Output:', Vrms, 'Vrms')
 print('Power on Antenna: ', Pout, 'W')
 
 #reset for Fourier Transform Analysis
@@ -230,14 +230,10 @@ freqs = np.linspace(start_freq, stop_freq, num_points)
 Vrms_values = []   
 ID = 0.3           
 
-
-for freq in freqs:
-    
+for freq in freqs: 
     scope.write(f':WGEN:FREQ {freq:.6e}')
-    time.sleep(1)  
-    
-    Vrms = float(scope.query(':MEAS:VRMS? CHAN1'))
-     
+    time.sleep(1)      
+    Vrms = float(scope.query(':MEAS:VRMS? CHAN1'))  
     Vrms_values.append(Vrms)
 
 
@@ -265,17 +261,16 @@ plt.tight_layout()
 plt.savefig('bode_plot.png')
 print('Bode Plot Finished!')
 
+
 #DC condition sweep
 supply.write('VOLT 12, (@2)')
 supply.write('CURR PROT:STAT OFF, (@2)')
-
 
 min_current = 0.01  # Minimum current 
 max_current = 1  # Maximum current 
 num_points = 20    
 
 supply_currents = np.linspace(min_current, max_current, num_points)
-
 
 ID = []  
 V = []   
