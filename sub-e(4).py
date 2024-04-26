@@ -93,9 +93,8 @@ Iidle = float(supply.query('MEAS:CURR? CH2'))
 Iactive = float(supply.query('MEAS:CURR? CH2'))
 Pactive = V*Iactive
 Vrms = float(scope.query(':MEAS:VRMS? CHAN1'))
-Pout = (Vrms*Vrms)/50
 print('Voltage Output:', Vrms, 'Vrms')
-print('Power on Antenna: ', Pout, 'W')
+
 
 #reset for Fourier Transform Analysis
 supply.write('VOLT 12, (@2)')
@@ -142,7 +141,7 @@ P_dBW = 10*log10(Pcoeffs)
 
 
 P1 = Pcoeffs[0]
-
+print('Power on Antenna: ', P1, 'W')
 eff = P1/Pactive
 
 
