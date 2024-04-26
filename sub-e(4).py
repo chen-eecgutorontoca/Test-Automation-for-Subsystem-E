@@ -17,8 +17,8 @@ __license__ = 'GPL'
 __version__ = '1.0'
 __email__ = 'sean.hum@utoronto.ca'
 
-def wait_for_powerhorse_test():
-    print("Press Enter to start Maximum Powerhorse test and '!' to terminate.")
+def wait_for_powerhorse_test():       #this supplies current may exceed its safety level
+    print("Press Enter to start Maximum Powerhorse test and '!' to terminate.") #be careful, you may burn transistors. 
 
     while True:
         user_input = input("Press Enter to continue: ")
@@ -262,7 +262,35 @@ plt.tight_layout()
 plt.savefig('bode_plot.png')
 print('Bode Plot Finished!')
 
+#gain compression test
+in_input_power = -30  
+max_input_power = 10   # dBM
+num_input_levels = 20  
 
+input_powers = linspace(min_input_power, max_input_power, num_input_levels)
+
+
+output_powers = []
+
+
+for input_power in input_powers:
+    input_voltage = sqrt(2 * 50 * 1e-3 * 10 ** (input_power / 10))  #1Vpp Sine input, assume 50 ohm impedance
+    scope.write(':WGEN:VOLT %f' % input_voltage)
+    time.sleep(1)
+
+    output_power = ... 
+    output_powers.append(output_power)
+
+plt.figure()
+plt.plot(input_powers, output_powers, marker='o', linestyle='-')
+plt.xlabel('Input Power (dBm)')
+plt.ylabel('Output Power (W)')
+plt.grid(True)
+plt.title('Gain Compression Measurement')
+plt.savefig('gain_compression_measurement.png')
+
+print("Gain Compression Measurement Completed!')
+      
 #DC condition sweep
 supply.write('VOLT 12, (@2)')
 supply.write('CURR PROT:STAT OFF, (@2)')
@@ -276,7 +304,7 @@ supply_currents = np.linspace(min_current, max_current, num_points)
 ID = []  
 V = []   
 
-wait_for_powerhorse_test()
+wait_for_powerhorse_test()    
 
 for current in supply_currents:
 
